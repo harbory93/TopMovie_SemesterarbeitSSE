@@ -12,5 +12,7 @@ namespace TopMovie_SemesterarbeitSSE.Models
         // Relationships
         public int CinemaId { get; set; }
         public Cinema? Cinema { get; set; }
+
+        public ICollection<Schedule> Schedules { get; set; }
     }
 }

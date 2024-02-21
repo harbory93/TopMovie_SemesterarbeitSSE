@@ -15,5 +15,8 @@ namespace TopMovie_SemesterarbeitSSE.Models
         public int Duration { get; set; }
         public string ImagePath { get; set; }
 
+        // Relationship
+        public ICollection<Schedule> Schedules { get; set; }
+
     }
 }

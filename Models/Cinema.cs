@@ -11,6 +11,6 @@ namespace TopMovie_SemesterarbeitSSE.Models
         public string ImagePath { get; set; }
 
         // Relationships
-        public ICollection<Theater>? Theaters { get; set; }
+        public ICollection<Theater> Theaters { get; set; }
     }
 }
