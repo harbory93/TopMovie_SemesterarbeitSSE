@@ -49,8 +49,8 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
         // GET: Schedules/Create
         public IActionResult Create()
         {
-            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Id");
-            ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Id");
+            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Title");
+            ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Name");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Id", schedule.MovieId);
-            ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Id", schedule.TheaterId);
+            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Title", schedule.MovieId);
+            ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Name", schedule.TheaterId);
             return View(schedule);
         }
 
@@ -85,8 +85,8 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
             {
                 return NotFound();
             }
-            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Id", schedule.MovieId);
-            ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Id", schedule.TheaterId);
+            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Title", schedule.MovieId);
+            ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Name", schedule.TheaterId);
             return View(schedule);
         }
 
@@ -122,8 +122,8 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Id", schedule.MovieId);
-            ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Id", schedule.TheaterId);
+            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Title", schedule.MovieId);
+            ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Name", schedule.TheaterId);
             return View(schedule);
         }
 

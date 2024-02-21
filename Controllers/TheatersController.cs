@@ -48,7 +48,7 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
         // GET: Theaters/Create
         public IActionResult Create()
         {
-            ViewData["CinemaId"] = new SelectList(_context.Cinema, "Id", "Id");
+            ViewData["CinemaId"] = new SelectList(_context.Cinema, "Id", "Name");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CinemaId"] = new SelectList(_context.Cinema, "Id", "Id", theater.CinemaId);
+            ViewData["CinemaId"] = new SelectList(_context.Cinema, "Id", "Name", theater.CinemaId);
             return View(theater);
         }
 
@@ -82,7 +82,7 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
             {
                 return NotFound();
             }
-            ViewData["CinemaId"] = new SelectList(_context.Cinema, "Id", "Id", theater.CinemaId);
+            ViewData["CinemaId"] = new SelectList(_context.Cinema, "Id", "Name", theater.CinemaId);
             return View(theater);
         }
 
@@ -118,7 +118,7 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CinemaId"] = new SelectList(_context.Cinema, "Id", "Id", theater.CinemaId);
+            ViewData["CinemaId"] = new SelectList(_context.Cinema, "Id", "Name", theater.CinemaId);
             return View(theater);
         }
 

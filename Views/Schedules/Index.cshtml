@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<TopMovie_SemesterarbeitSSE.Models.Schedule>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Schedules";
 }
 
-<h1>Index</h1>
+<h1>Schedules</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -12,6 +12,9 @@
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie.ImagePath)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Time)
             </th>
@@ -24,6 +27,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Theater)
             </th>
+
             <th></th>
         </tr>
     </thead>
@@ -31,16 +35,21 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                <a href="@item.Movie.ImagePath" target="_blank">
+                    <img src="@item.Movie.ImagePath" style="max-width: 250px; max-height: 250px" />
+                </a>
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Time)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Movie.Id)
+                @Html.DisplayFor(modelItem => item.Movie.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Theater.Id)
+                @Html.DisplayFor(modelItem => item.Theater.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
