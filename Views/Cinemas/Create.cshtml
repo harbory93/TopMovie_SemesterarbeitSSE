@@ -4,6 +4,8 @@
     ViewData["Title"] = "Create";
 }
 
+@if (User.IsInRole("Admin"))
+{
 <h1>Create</h1>
 
 <h4>Cinema</h4>
@@ -28,7 +30,7 @@
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-success" style="margin-top: 5px;" />
             </div>
         </form>
     </div>
@@ -37,6 +39,11 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+}
+else
+{
+    await Html.RenderPartialAsync("_AccessDenied", "Access denied");
+}
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

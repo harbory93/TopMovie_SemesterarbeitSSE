@@ -6,6 +6,8 @@
     ViewData["Title"] = "Create";
 }
 
+@if (User.IsInRole("Admin"))
+{
 <h1>Create</h1>
 
 <h4>Schedule</h4>
@@ -45,7 +47,7 @@
                 <select asp-for="TheaterId" class ="form-control" asp-items="ViewBag.TheaterId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-success" style="margin-top: 5px;" />
             </div>
         </form>
     </div>
@@ -54,6 +56,11 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+}
+else
+{
+    await Html.RenderPartialAsync("_AccessDenied", "Access denied");
+}
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -1,0 +1,13 @@
+﻿<td>
+    <div style="display: flex; flex-direction: column;">
+        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary" style="width: 160px" >Details</a>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <div style="display: flex; margin-top: 5px;">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary" style="margin-right: 5px;">Edit</a>
+                <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger" style="width: 100px;">Delete</a>
+            </div>
+        }
+    </div>
+</td>

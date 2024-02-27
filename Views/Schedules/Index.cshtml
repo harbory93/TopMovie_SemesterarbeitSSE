@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<TopMovie_SemesterarbeitSSE.Models.Schedule>
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 @{
     ViewData["Title"] = "Schedules";
@@ -6,9 +10,12 @@
 
 <h1>Schedules</h1>
 
+@if (User.IsInRole("Admin"))
+{
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -27,7 +34,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Theater)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Theater.Capacity)
+            </th>
 
+            <th></th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
@@ -52,11 +64,15 @@
                 @Html.DisplayFor(modelItem => item.Theater.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @Html.DisplayFor(modelItem => item.Theater.Capacity)
+            </td>
+            <td>
+                <button class="btn btn-primary">Select Seats</button>
+            </td>
+            <td>
+                @await Html.PartialAsync("_CRUDPartial", item)
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

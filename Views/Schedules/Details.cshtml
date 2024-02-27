@@ -10,6 +10,12 @@
     <h4>Schedule</h4>
     <hr />
     <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Movie.ImagePath)
+        </dt>
+        <dd class="col-sm-10">
+            <img class="rounded" src="@Url.Content(Model.Movie.ImagePath)" style="max-width: 250px; max-height: 250px;" />
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Time)
         </dt>
@@ -28,6 +34,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Movie.Title)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Movie.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Movie.Description)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Theater)
         </dt>
@@ -37,6 +49,10 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> <br />
+    }
     <a asp-action="Index">Back to List</a>
 </div>
+

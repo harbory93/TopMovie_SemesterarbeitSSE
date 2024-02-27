@@ -4,6 +4,8 @@
     ViewData["Title"] = "Cinemas";
 }
 
+@if (User.IsInRole("Admin"))
+{
 <h1>Cinemas</h1>
 
 <p>
@@ -23,6 +25,7 @@
             </th>
             
             <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -37,13 +40,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.City)
             </td>
-
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @await Html.PartialAsync("_CRUDPartial", item)
             </td>
         </tr>
 }
     </tbody>
 </table>
+}
+else
+{
+    await Html.RenderPartialAsync("_AccessDenied", "Access denied");
+}
