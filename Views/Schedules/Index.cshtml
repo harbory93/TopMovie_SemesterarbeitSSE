@@ -64,7 +64,14 @@
                 @Html.DisplayFor(modelItem => item.Theater.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Theater.Capacity)
+                @((item.Theater.Capacity) - item.SeatsBooked)
+            </td>
+            <td>
+                <form asp-controller="Schedules" asp-action="SelectSeats" method="post">
+                    <input type="hidden" name="scheduleId" value="@item.Id" />
+                    <input type="number" name="numberOfSeats" min="1" placeholder="Seats" />
+                    <button type="submit" class="btn btn-primary">Book Seats</button>
+                </form>
             </td>
             <td>
                 @await Html.PartialAsync("_CRUDPartial", item)

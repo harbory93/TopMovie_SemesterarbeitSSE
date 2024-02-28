@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,13 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
     public class SchedulesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public SchedulesController(ApplicationDbContext context)
+        public SchedulesController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
+            
         }
 
         // GET: Schedules
@@ -161,6 +165,46 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        // POST: Schedules/SelectSeats
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SelectSeats(int scheduleId, int numberOfSeats)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Challenge();
+            }
+
+            var schedule = await _context.Schedule.Include(s => s.Theater).FirstOrDefaultAsync(s => s.Id == scheduleId);
+            if (schedule == null)
+            {
+                return NotFound();
+            }
+
+            var availableSeats = schedule.Theater.Capacity - schedule.SeatsBooked;
+            if (availableSeats >= numberOfSeats)
+            {
+                var booking = new Booking {
+                    UserId = user.Id,
+                    ScheduleId = scheduleId,
+                    NumberOfSeats = numberOfSeats
+                };
+                _context.Booking.Add(booking);
+
+                schedule.SeatsBooked += numberOfSeats;
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Not enough seats available.";
+                return View("Error");
+            }
+        }
+
 
         private bool ScheduleExists(int id)
         {

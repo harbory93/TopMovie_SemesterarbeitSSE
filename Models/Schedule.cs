@@ -8,6 +8,7 @@ namespace TopMovie_SemesterarbeitSSE.Models
         [Key]
         public int Id { get; set; }
         public EScheduleTimes Time { get; set; }
+        public int SeatsBooked { get; set; } = 0;
         public DateOnly Date { get; set; }
 
         // Relationships
