@@ -67,9 +67,6 @@
                 @Html.DisplayFor(modelItem => item.Theater.Capacity)
             </td>
             <td>
-                <button class="btn btn-primary">Select Seats</button>
-            </td>
-            <td>
                 @await Html.PartialAsync("_CRUDPartial", item)
             </td>
         </tr>
