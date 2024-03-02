@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TopMovie_SemesterarbeitSSE.Data;
+using TopMovie_SemesterarbeitSSE.Enums;
 using TopMovie_SemesterarbeitSSE.Models;
 
 namespace TopMovie_SemesterarbeitSSE.Controllers
@@ -55,7 +56,9 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
         {
             ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Title");
             ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Name");
-            return View();
+            ViewBag.ScheduleTimesSelectList = EnumHelper.GetSelectListForEnum<EScheduleTimes>();
+
+            return View();    
         }
 
         // POST: Schedules/Create
@@ -196,12 +199,13 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
                 schedule.SeatsBooked += numberOfSeats;
                 await _context.SaveChangesAsync();
 
+                TempData["MessageKey"] = "BookingSuccess";
                 return RedirectToAction("Index");
             }
             else
             {
-                ViewBag.ErrorMessage = "Not enough seats available.";
-                return View("Error");
+                TempData["MessageKey"] = "NotEnoughSeats";
+                return RedirectToAction("Index");
             }
         }
 

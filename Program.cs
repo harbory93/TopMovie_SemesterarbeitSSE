@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TopMovie_SemesterarbeitSSE.Data;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +16,29 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+
+builder.Services.AddLocalization(options =>
+{
+    options.ResourcesPath = "Resources";
+});
+
+builder.Services.Configure<RequestLocalizationOptions>(options => {
+    var supportedCultures = new[]
+    {
+        new CultureInfo("en-US"),
+        new CultureInfo("de-DE")
+    };
+
+    options.DefaultRequestCulture = new RequestCulture("de-DE");
+    options.SupportedUICultures = supportedCultures;
+
+});
 
 var app = builder.Build();
+
+app.UseRequestLocalization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

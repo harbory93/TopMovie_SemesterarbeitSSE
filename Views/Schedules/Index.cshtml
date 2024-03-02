@@ -1,41 +1,45 @@
 ﻿@model IEnumerable<TopMovie_SemesterarbeitSSE.Models.Schedule>
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
 
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@inject IViewLocalizer Localizer
+@inject IStringLocalizer<SharedResources> SharedLocalizer
 
 @{
-    ViewData["Title"] = "Schedules";
+    ViewData["Title"] = @SharedLocalizer["Schedules"];
 }
 
-<h1>Schedules</h1>
+<h1>@SharedLocalizer["Schedules"]</h1>
 
 @if (User.IsInRole("Admin"))
 {
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">@SharedLocalizer["Create New"]</a>
 </p>
 }
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Movie.ImagePath)
+                @SharedLocalizer["ImagePath"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Time)
+                @SharedLocalizer["Time"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                @SharedLocalizer["Date"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movie)
+                @SharedLocalizer["Movie"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Theater)
+                @SharedLocalizer["Theater"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Theater.Capacity)
+                @SharedLocalizer["Capacity"]
             </th>
 
             <th></th>
@@ -69,8 +73,8 @@
             <td>
                 <form asp-controller="Schedules" asp-action="SelectSeats" method="post">
                     <input type="hidden" name="scheduleId" value="@item.Id" />
-                    <input type="number" name="numberOfSeats" min="1" placeholder="Seats" />
-                    <button type="submit" class="btn btn-primary">Book Seats</button>
+                    <input type="number" name="numberOfSeats" min="1" placeholder=@Localizer["Seats"] required/>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 5px; width: 120px;">@Localizer["Book Seats"]</button>
                 </form>
             </td>
             <td>
@@ -80,3 +84,34 @@
     }
     </tbody>
 </table>
+
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="feedbackModalLabel">@Localizer["Booking Feedback"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">@Localizer["Close"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (TempData["MessageKey"] != null)
+{
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            var localizedMessage = "@Html.Raw(@Localizer[TempData["MessageKey"].ToString()].Value)";
+
+            var modalBody = document.querySelector('#feedbackModal .modal-body');
+            modalBody.textContent = localizedMessage
+            var feedbackModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
+            feedbackModal.show();
+        });
+    </script>
+}
