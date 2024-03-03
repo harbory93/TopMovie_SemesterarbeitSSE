@@ -7,7 +7,7 @@ namespace TopMovie_SemesterarbeitSSE.Enums
     public class EnumHelper
     {
         public static IEnumerable<SelectListItem> GetSelectListForEnum<TEnum>()
-        where TEnum : struct, IConvertible // Ensure TEnum is an enum
+        where TEnum : struct, IConvertible
         {
             if (!typeof(TEnum).IsEnum)
             {

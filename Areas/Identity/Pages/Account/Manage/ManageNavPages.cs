@@ -61,7 +61,6 @@ namespace  TopMovie_SemesterarbeitSSE.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
 
-
         public static string Bookings => "Bookings";
         public static string BookingsNavClass(ViewContext viewContext) => PageNavClass(viewContext, Bookings);
 

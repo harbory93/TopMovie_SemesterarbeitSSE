@@ -117,28 +117,175 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Access denied" xml:space="preserve">
+    <value>Zugriff verweigert</value>
+  </data>
+  <data name="Are you sure you want to delete this?" xml:space="preserve">
+    <value>Sind Sie sicher, dass Sie dies löschen wollen?</value>
+  </data>
+  <data name="Back to List" xml:space="preserve">
+    <value>Zurück zur Übersicht</value>
+  </data>
+  <data name="Bookings" xml:space="preserve">
+    <value>Buchungen</value>
+  </data>
   <data name="Capacity" xml:space="preserve">
+    <value>Sitzplätze</value>
+  </data>
+  <data name="CapacityOpen" xml:space="preserve">
     <value>Verfügbare Sitzplätze</value>
   </data>
+  <data name="Cast" xml:space="preserve">
+    <value>Schauspieler</value>
+  </data>
+  <data name="Change email" xml:space="preserve">
+    <value>Email ändern</value>
+  </data>
+  <data name="Change password" xml:space="preserve">
+    <value>Passwort ändern</value>
+  </data>
+  <data name="Cinema" xml:space="preserve">
+    <value>Kino</value>
+  </data>
+  <data name="Cinemas" xml:space="preserve">
+    <value>Kinos</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Stadt</value>
+  </data>
+  <data name="Confirm password" xml:space="preserve">
+    <value>Kennwort bestätigen</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Erstellen</value>
+  </data>
+  <data name="Create a new account." xml:space="preserve">
+    <value>Erstellen Sie ein neues Konto.</value>
+  </data>
   <data name="Create New" xml:space="preserve">
-    <value>Neuer Eintrag erstellen</value>
+    <value>Neuen Eintrag erstellen</value>
+  </data>
+  <data name="Current password" xml:space="preserve">
+    <value>Aktuelles Kennwort</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Datum</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="Deleting this data will permanently remove your account, and this cannot be recovered." xml:space="preserve">
+    <value>Wenn Sie diese Daten löschen, wird Ihr Konto dauerhaft gelöscht und kann nicht wiederhergestellt werden.</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Beschreibung</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Director" xml:space="preserve">
+    <value>Regie</value>
+  </data>
+  <data name="Duration" xml:space="preserve">
+    <value>Laufzeit</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Genre" xml:space="preserve">
+    <value>Kategorie</value>
+  </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Hallo</value>
+  </data>
   <data name="ImagePath" xml:space="preserve">
     <value>Titelbild</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Anmelden</value>
+  </data>
+  <data name="Logo" xml:space="preserve">
+    <value>Logo</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Abmelden</value>
+  </data>
+  <data name="Manage Email" xml:space="preserve">
+    <value>Email verwalten</value>
+  </data>
+  <data name="Manage your account" xml:space="preserve">
+    <value>Konto verwalten</value>
   </data>
   <data name="Movie" xml:space="preserve">
     <value>Film</value>
   </data>
+  <data name="Movies" xml:space="preserve">
+    <value>Filme</value>
+  </data>
+  <data name="My Bookings" xml:space="preserve">
+    <value>Meine Buchungen</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="New email" xml:space="preserve">
+    <value>Neue Email</value>
+  </data>
+  <data name="New password" xml:space="preserve">
+    <value>Neues Kennwort</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Kennwort</value>
+  </data>
+  <data name="Personal data" xml:space="preserve">
+    <value>Persönliche Daten</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Registrieren</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="Schedule" xml:space="preserve">
+    <value>Vorführung</value>
+  </data>
   <data name="Schedules" xml:space="preserve">
     <value>Vorführungen</value>
+  </data>
+  <data name="Seats Booked" xml:space="preserve">
+    <value>Gebuchte Sitzplätze</value>
+  </data>
+  <data name="Select Genre" xml:space="preserve">
+    <value>Kategorie auswählen</value>
   </data>
   <data name="Theater" xml:space="preserve">
     <value>Saal</value>
   </data>
+  <data name="Theaters" xml:space="preserve">
+    <value>Projektionssäle</value>
+  </data>
   <data name="Time" xml:space="preserve">
     <value>Zeit</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="Update password" xml:space="preserve">
+    <value>Kennwort aktualisieren</value>
+  </data>
+  <data name="Welcome to" xml:space="preserve">
+    <value>Wilkommen bei</value>
+  </data>
+  <data name="You have no bookings." xml:space="preserve">
+    <value>Sie haben noch keine Buchungen.</value>
+  </data>
+  <data name="you will be redirected to the login page." xml:space="preserve">
+    <value>Sie werden zur Anmeldeseite weitergeleitet.</value>
   </data>
 </root>

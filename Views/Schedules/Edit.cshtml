@@ -1,16 +1,20 @@
 ﻿@model TopMovie_SemesterarbeitSSE.Models.Schedule
+
 @using System.ComponentModel.DataAnnotations
 @using TopMovie_SemesterarbeitSSE.Enums
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<SharedResources> SharedLocalizer
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = @SharedLocalizer["Edit"];
 }
 
 @if (User.IsInRole("Admin"))
 {
-<h1>Edit</h1>
+<h1>@SharedLocalizer["Edit"]</h1>
 
-<h4>Schedule</h4>
+<h4>@SharedLocalizer["Schedule"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -18,7 +22,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Time" class="control-label"></label>
+                <label asp-for="Time" class="control-label">@SharedLocalizer["Time"]</label>
                 <select asp-for="Time" class="form-control">
                     <option value=""></option>
                     @foreach (var time in Enum.GetValues(typeof(EScheduleTimes)))
@@ -35,29 +39,29 @@
                 <span asp-validation-for="Time" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
+                <label asp-for="Date" class="control-label">@SharedLocalizer["Date"]</label>
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MovieId" class="control-label"></label>
+                <label asp-for="MovieId" class="control-label">@SharedLocalizer["Film"]</label>
                 <select asp-for="MovieId" class="form-control" asp-items="ViewBag.MovieId"></select>
                 <span asp-validation-for="MovieId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TheaterId" class="control-label"></label>
+                <label asp-for="TheaterId" class="control-label">@SharedLocalizer["Projektionssaal"]</label>
                 <select asp-for="TheaterId" class="form-control" asp-items="ViewBag.TheaterId"></select>
                 <span asp-validation-for="TheaterId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" style="margin-top: 5px;" />
+                <input type="submit" value=@SharedLocalizer["Save"] class="btn btn-primary" style="margin-top: 5px;" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@SharedLocalizer["Back to List"]</a>
 </div>
 }
 else

@@ -1,27 +1,31 @@
 ﻿@model IEnumerable<TopMovie_SemesterarbeitSSE.Models.Theater>
 
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<SharedResources> SharedLocalizer
+
 @{
-    ViewData["Title"] = "Theaters";
+    ViewData["Title"] = SharedLocalizer["Theaters"];
 }
 
 @if (User.IsInRole("Admin"))
 {
-<h1>Theaters</h1>
+<h1>@SharedLocalizer["Theaters"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">@SharedLocalizer["Create New"]</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @SharedLocalizer["Name"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Capacity)
+                @SharedLocalizer["Capacity"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cinema)
+                @SharedLocalizer["Cinema"]
             </th>
             <th></th>
             <th></th>

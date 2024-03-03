@@ -1,13 +1,20 @@
-﻿<td>
-    <div style="display: flex; flex-direction: column;">
-        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary" style="width: 160px" >Details</a>
+﻿@using Microsoft.Extensions.Localization
 
-        @if (User.IsInRole("Admin"))
-        {
-            <div style="display: flex; margin-top: 5px;">
-                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary" style="margin-right: 5px;">Edit</a>
-                <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger" style="width: 100px;">Delete</a>
-            </div>
-        }
+@inject IStringLocalizer<SharedResources> SharedLocalizer
+
+<td>
+    <div style="display: flex; flex-direction: column;">
+        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary" style="width: 100px" >Details</a>
     </div>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <div style="margin-top: 5px;">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary" style="width: 100px;">@SharedLocalizer["Edit"]</a>
+        </div>
+
+        <div style="margin-top: 5px;">
+            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger" style="width: 100px;">@SharedLocalizer["Delete"]</a>
+        </div>
+    }
 </td>

@@ -1,14 +1,18 @@
 ﻿@model TopMovie_SemesterarbeitSSE.Models.Cinema
 
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<SharedResources> SharedLocalizer
+
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = SharedLocalizer["Edit"];
 }
 
 @if (User.IsInRole("Admin"))
 {
-<h1>Edit</h1>
+<h1>@SharedLocalizer["Edit"]</h1>
 
-<h4>Cinema</h4>
+<h4>@SharedLocalizer["Cinema"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -16,29 +20,29 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">@SharedLocalizer["Name"]</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
+                <label asp-for="City" class="control-label">@SharedLocalizer["City"]</label>
                 <input asp-for="City" class="form-control" />
                 <span asp-validation-for="City" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImagePath" class="control-label"></label>
+                <label asp-for="ImagePath" class="control-label">@SharedLocalizer["Logo"]</label>
                 <input asp-for="ImagePath" class="form-control" />
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" style="margin-top: 5px;" />
+                <input type="submit" value=@SharedLocalizer["Save"] class="btn btn-primary" style="margin-top: 5px;" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@SharedLocalizer["Back to List"]</a>
 </div>
 }
 else

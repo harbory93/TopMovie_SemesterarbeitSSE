@@ -1,50 +1,53 @@
 ﻿@model TopMovie_SemesterarbeitSSE.Models.Schedule
 @using TopMovie_SemesterarbeitSSE.Enums
 @using System.ComponentModel.DataAnnotations
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<SharedResources> SharedLocalizer
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = @SharedLocalizer["Create"];
 }
 
 @if (User.IsInRole("Admin"))
 {
-<h1>Create</h1>
+<h1>@SharedLocalizer["Create"]</h1>
 
-<h4>Schedule</h4>
+<h4>@SharedLocalizer["Schedule"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Time" class="control-label"></label>
+                <label asp-for="Time" class="control-label">@SharedLocalizer["Time"]</label>
                 <select asp-for="Time" class="form-control" asp-items="ViewBag.ScheduleTimesSelectList">
                     <option value=""></option>
                     </select>
                 <span asp-validation-for="Time" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
+                <label asp-for="Date" class="control-label">@SharedLocalizer["Date"]</label>
                 <input asp-for="Date" class="form-control" type="date" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MovieId" class="control-label"></label>
+                <label asp-for="MovieId" class="control-label">@SharedLocalizer["Film"]</label>
                 <select asp-for="MovieId" class ="form-control" asp-items="ViewBag.MovieId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="TheaterId" class="control-label"></label>
+                <label asp-for="TheaterId" class="control-label">@SharedLocalizer["Projecktionssaal"]</label>
                 <select asp-for="TheaterId" class ="form-control" asp-items="ViewBag.TheaterId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-success" style="margin-top: 5px;" />
+                <input type="submit" value=@SharedLocalizer["Create"] class="btn btn-success" style="margin-top: 5px;" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@SharedLocalizer["Back to List"]</a>
 </div>
 }
 else

@@ -1,29 +1,35 @@
 ﻿@page
 @model BookingsModel
+
+@using TopMovie_SemesterarbeitSSE
 @using TopMovie_SemesterarbeitSSE.Enums
 @using System.ComponentModel.DataAnnotations
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<SharedResources> SharedLocalizer
+
 @{
-    ViewData["Title"] = "Bookings";
+    ViewData["Title"] = SharedLocalizer["Bookings"];
     ViewData["ActivePage"] = ManageNavPages.Bookings;
 }
 
-<h4>My Bookings</h4>
+<h4>@SharedLocalizer["My Bookings"]</h4>
 <div class="row">
     <div class="col-md-12">
         @if (Model.Bookings.Count == 0)
         {
-            <p>You have no bookings.</p>
+            <p>@SharedLocalizer["You have no bookings."]</p>
         }
         else
         {
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Movie</th>
-                        <th>Theater</th>
-                        <th>Seats Booked</th>
+                        <th>@SharedLocalizer["Date"]</th>
+                        <th>@SharedLocalizer["Time"]</th>
+                        <th>@SharedLocalizer["Movie"]</th>
+                        <th>@SharedLocalizer["Theater"]</th>
+                        <th>@SharedLocalizer["Seats Booked"]</th>
                     </tr>
                 </thead>
                 <tbody>

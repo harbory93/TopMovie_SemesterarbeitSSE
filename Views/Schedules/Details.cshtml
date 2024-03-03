@@ -1,8 +1,6 @@
 ﻿@model TopMovie_SemesterarbeitSSE.Models.Schedule
-@using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.Extensions.Localization
 
-@inject IViewLocalizer Localizer
 @inject IStringLocalizer<SharedResources> SharedLocalizer
 
 @{
@@ -16,43 +14,43 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Movie.ImagePath)
+            @SharedLocalizer["ImagePath"]
         </dt>
         <dd class="col-sm-10">
             <img class="rounded" src="@Url.Content(Model.Movie.ImagePath)" style="max-width: 250px; max-height: 250px;" />
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Time)
+            @SharedLocalizer["Time"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Time)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Date)
+            @SharedLocalizer["Date"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Date)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Movie)
+            @SharedLocalizer["Movie"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Movie.Title)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Movie.Description)
+            @SharedLocalizer["Description"]
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Movie.Description)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Movie.Duration)
+            @SharedLocalizer["Duration"]
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Movie.Duration) min.
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Theater)
+            @SharedLocalizer["Theater"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Theater.Name)
@@ -62,8 +60,8 @@
 <div>
     @if (User.IsInRole("Admin"))
     {
-        <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> <br />
+        <a asp-action="Edit" asp-route-id="@Model?.Id">@SharedLocalizer["Edit"]</a> <br />
     }
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@SharedLocalizer["Back to List"]</a>
 </div>
 

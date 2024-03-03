@@ -1,7 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
 
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@inject IStringLocalizer<SharedResources> SharedLocalizer
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +20,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Schedules" asp-action="Index">Welcome to TopMovie AG</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Schedules" asp-action="Index">@SharedLocalizer["Welcome to"] TopMovie AG</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -27,17 +30,17 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Movies" asp-action="Index">Movies</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Movies" asp-action="Index">@SharedLocalizer["Movies"]</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Cinemas" asp-action="Index">Cinemas</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Cinemas" asp-action="Index">@SharedLocalizer["Cinemas"]</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Theaters" asp-action="Index">Theaters</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Theaters" asp-action="Index">@SharedLocalizer["Theaters"]</a>
                             </li>
                         }
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Schedules" asp-action="Index">Schedules</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Schedules" asp-action="Index">@SharedLocalizer["Schedules"]</a>
                         </li>
                     </ul>
 
@@ -59,8 +62,6 @@
                             </ul>
                         </li>
                     </ul>
-
-
 
                     <partial name="_LoginPartial" />
                 </div>
@@ -84,3 +85,28 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to update language switcher links
+        function updateLanguageLinks() {
+            var currentUrl = window.location.href;
+            var baseUrl = currentUrl.split('?')[0]; // Split URL at the query string and take the first part
+            var newUrlDe = `${baseUrl}?ui-culture=de-DE`;
+            var newUrlEn = `${baseUrl}?ui-culture=en-US`;
+
+            // If there's already a query string, append ui-culture parameter instead of overwriting
+            if (currentUrl.includes('?')) {
+                newUrlDe = `${baseUrl}&ui-culture=de-DE`;
+                newUrlEn = `${baseUrl}&ui-culture=en-US`;
+            }
+
+            // Update href attributes for DE and EN links
+            document.querySelector('a.dropdown-item[href*="ui-culture=de-DE"]').setAttribute('href', newUrlDe);
+            document.querySelector('a.dropdown-item[href*="ui-culture=en-US"]').setAttribute('href', newUrlEn);
+        }
+
+        // Update links immediately on load
+        updateLanguageLinks();
+    });
+</script>
