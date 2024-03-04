@@ -31,6 +31,24 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        // GET: Schedules/SearchForm
+        public IActionResult SearchForm()
+        {
+            return View();
+        }
+
+        // POST: Schedules/ShowSearch
+        public async Task<IActionResult> ShowSearch(string SearchPhrase)
+        {
+            var applicationDbContext = _context.Schedule
+                .Include(j => j.Movie)
+                .Include(j => j.Theater)
+                .Where(j => (j.Movie != null && j.Movie.Title.Contains(SearchPhrase)) ||
+                            (j.Theater != null && j.Theater.Name.Contains(SearchPhrase)));
+
+            return View("Index", await applicationDbContext.ToListAsync());
+        }
+
         // GET: Schedules/Details/5
         public async Task<IActionResult> Details(int? id)
         {

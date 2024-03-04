@@ -258,6 +258,9 @@
   <data name="Schedules" xml:space="preserve">
     <value>Vorführungen</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Suchen</value>
+  </data>
   <data name="Seats Booked" xml:space="preserve">
     <value>Gebuchte Sitzplätze</value>
   </data>
@@ -287,5 +290,8 @@
   </data>
   <data name="you will be redirected to the login page." xml:space="preserve">
     <value>Sie werden zur Anmeldeseite weitergeleitet.</value>
+  </data>
+  <data name="Your password has been changed." xml:space="preserve">
+    <value>Ihr Kennwort wurde geändert.</value>
   </data>
 </root>

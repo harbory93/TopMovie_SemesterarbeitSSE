@@ -86,9 +86,10 @@ using (var scope = app.Services.CreateScope())
 
     if (await userManager.FindByEmailAsync(email) == null)
     {
-        var user = new IdentityUser();
-        user.UserName = email;
-        user.Email = email;
+        var user = new IdentityUser {
+            UserName = email,
+            Email = email
+        };
 
         await userManager.CreateAsync(user, password);
 

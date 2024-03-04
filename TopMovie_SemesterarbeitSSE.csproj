@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Resources\SharedResources.de-DE.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator></Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\SharedResources.resx">
       <Generator></Generator>
