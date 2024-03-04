@@ -204,6 +204,9 @@
   <data name="ImagePath" xml:space="preserve">
     <value>Titelbild</value>
   </data>
+  <data name="Informations" xml:space="preserve">
+    <value>Informationen</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Anmelden</value>
   </data>
@@ -281,9 +284,6 @@
   </data>
   <data name="Update password" xml:space="preserve">
     <value>Kennwort aktualisieren</value>
-  </data>
-  <data name="Welcome to" xml:space="preserve">
-    <value>Wilkommen bei</value>
   </data>
   <data name="You have no bookings." xml:space="preserve">
     <value>Sie haben noch keine Buchungen.</value>

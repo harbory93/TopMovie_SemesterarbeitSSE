@@ -16,74 +16,42 @@
 
 @if (User.IsInRole("Admin"))
 {
-<p>
-    <a asp-action="Create">@SharedLocalizer["Create New"]</a>
-</p>
+    <p>
+        <a asp-action="Create" class="btn btn-success">@SharedLocalizer["Create New"]</a>
+    </p>
 }
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @SharedLocalizer["ImagePath"]
-            </th>
-            <th>
-                @SharedLocalizer["Time"]
-            </th>
-            <th>
-                @SharedLocalizer["Date"]
-            </th>
-            <th>
-                @SharedLocalizer["Movie"]
-            </th>
-            <th>
-                @SharedLocalizer["Theater"]
-            </th>
-            <th>
-                @SharedLocalizer["CapacityOpen"]
-            </th>
 
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
+<div class="d-flex flex-wrap justify-content-start">
+    @foreach (var item in Model)
+    {
+        <div class="card text-black border-dark mb-3 m-2" style="max-width: 24rem;">
+            <div class="card-header">@Html.DisplayFor(modelItem => item.Movie.Title)</div>
+            <div class="card-body">
+                <h5 class="card-title text-black">@SharedLocalizer["Informations"]</h5>
+                <p class="card-text text-black">
+                    <strong>@SharedLocalizer["Time"]:</strong> @Html.DisplayFor(modelItem => item.Time)<br>
+                    <strong>@SharedLocalizer["Date"]:</strong> @Html.DisplayFor(modelItem => item.Date)<br>
+                    <strong>@SharedLocalizer["Theater"]:</strong> @Html.DisplayFor(modelItem => item.Theater.Name)<br>
+                    <strong>@SharedLocalizer["CapacityOpen"]:</strong> @((item.Theater.Capacity) - item.SeatsBooked)
+                </p>
                 <a href="@item.Movie.ImagePath" target="_blank">
-                    <img src="@item.Movie.ImagePath" style="max-width: 250px; max-height: 250px" />
+                    <img src="@item.Movie.ImagePath" class="card-img" style="max-height: 300px" alt="Movie image" />
                 </a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Time)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Movie.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Theater.Name)
-            </td>
-            <td>
-                @((item.Theater.Capacity) - item.SeatsBooked)
-            </td>
-            <td>
-                <form asp-controller="Schedules" asp-action="SelectSeats" method="post">
-                    <input type="hidden" name="scheduleId" value="@item.Id" />
-                    <input type="number" name="numberOfSeats" min="1" placeholder=@Localizer["Seats"] required/>
-                    <button type="submit" class="btn btn-primary" style="margin-top: 5px; width: 120px;">@Localizer["Book Seats"]</button>
-                </form>
-            </td>
-            <td>
+                <div class="mt-3 d-flex align-items-center">
+                    <form asp-controller="Schedules" asp-action="SelectSeats" method="post" class="w-100 d-flex align-items-center">
+                        <input type="hidden" name="scheduleId" value="@item.Id" />
+                        <input type="number" name="numberOfSeats" class="form-control" style="max-width: 100px; margin-right: 10px;" min="1" placeholder=@Localizer["Seats"] required />
+                        <button type="submit" class="btn btn-secondary"> @Localizer["Book Seats"]</button>
+                    </form>
+                </div>
+
+            </div>
+            <div class="card-footer">
                 @await Html.PartialAsync("_CRUDPartial", item)
-            </td>
-        </tr>
+            </div>
+        </div>
     }
-    </tbody>
-</table>
+</div>
 
 <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -105,11 +73,11 @@
 {
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
-            
+
             var localizedMessage = "@Html.Raw(@Localizer[TempData["MessageKey"].ToString()].Value)";
 
             var modalBody = document.querySelector('#feedbackModal .modal-body');
-            modalBody.textContent = localizedMessage
+            modalBody.textContent = localizedMessage;
             var feedbackModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
             feedbackModal.show();
         });

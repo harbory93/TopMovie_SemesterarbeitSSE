@@ -44,6 +44,9 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
                 .Include(j => j.Movie)
                 .Include(j => j.Theater)
                 .Where(j => (j.Movie != null && j.Movie.Title.Contains(SearchPhrase)) ||
+                            (j.Movie != null && j.Movie.Description.Contains(SearchPhrase)) ||
+                            (j.Movie != null && j.Movie.Director.Contains(SearchPhrase)) ||
+                            (j.Movie != null && j.Movie.Cast.Contains(SearchPhrase)) ||
                             (j.Theater != null && j.Theater.Name.Contains(SearchPhrase)));
 
             return View("Index", await applicationDbContext.ToListAsync());

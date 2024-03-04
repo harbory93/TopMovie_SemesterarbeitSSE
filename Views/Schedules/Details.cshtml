@@ -7,61 +7,49 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1 class="mb-4">Details</h1>
 
-<div>
-    <h4>@SharedLocalizer["Schedules"]</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @SharedLocalizer["ImagePath"]
-        </dt>
-        <dd class="col-sm-10">
-            <img class="rounded" src="@Url.Content(Model.Movie.ImagePath)" style="max-width: 250px; max-height: 250px;" />
-        </dd>
-        <dt class = "col-sm-2">
-            @SharedLocalizer["Time"]
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Time)
-        </dd>
-        <dt class = "col-sm-2">
-            @SharedLocalizer["Date"]
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-        <dt class = "col-sm-2">
-            @SharedLocalizer["Movie"]
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Movie.Title)
-        </dd>
-        <dt class="col-sm-2">
-            @SharedLocalizer["Description"]
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Movie.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @SharedLocalizer["Duration"]
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Movie.Duration) min.
-        </dd>
-        <dt class = "col-sm-2">
-            @SharedLocalizer["Theater"]
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Theater.Name)
-        </dd>
-    </dl>
-</div>
-<div>
-    @if (User.IsInRole("Admin"))
-    {
-        <a asp-action="Edit" asp-route-id="@Model?.Id">@SharedLocalizer["Edit"]</a> <br />
-    }
-    <a asp-action="Index">@SharedLocalizer["Back to List"]</a>
-</div>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">@SharedLocalizer["Schedules"]</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <img class="rounded img-fluid" src="@Url.Content(Model.Movie.ImagePath)" alt="Movie image" />
+            </div>
+            <div class="col-md-8">
+                <dl class="row">
+                    <dt class="col-sm-4">@SharedLocalizer["Time"]</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Time)</dd>
 
+                    <dt class="col-sm-4">@SharedLocalizer["Date"]</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Date)</dd>
+
+                    <dt class="col-sm-4">@SharedLocalizer["Movie"]</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Movie.Title)</dd>
+
+                    <dt class="col-sm-4">@SharedLocalizer["Description"]</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Movie.Description)</dd>
+
+                    <dt class="col-sm-4">@SharedLocalizer["Cast"]</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Movie.Cast)</dd>
+
+                    <dt class="col-sm-4">@SharedLocalizer["Duration"]</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Movie.Duration) min.</dd>
+
+                    <dt class="col-sm-4">@SharedLocalizer["Theater"]</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Theater.Name)</dd>
+
+                    
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">@SharedLocalizer["Edit"]</a>
+        }
+        <a asp-action="Index" class="btn btn-secondary">@SharedLocalizer["Back to List"]</a>
+    </div>
+</div>
