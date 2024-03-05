@@ -25,13 +25,13 @@
     @foreach (var item in Model)
     {
         <div class="card text-black border-dark mb-3 m-2" style="max-width: 24rem;">
-            <div class="card-header">@Html.DisplayFor(modelItem => item.Movie.Title)</div>
+            <div class="card-header"><strong>@Html.DisplayFor(modelItem => item.Movie.Title)</strong></div>
             <div class="card-body">
-                <h5 class="card-title text-black">@SharedLocalizer["Informations"]</h5>
                 <p class="card-text text-black">
                     <strong>@SharedLocalizer["Time"]:</strong> @Html.DisplayFor(modelItem => item.Time)<br>
                     <strong>@SharedLocalizer["Date"]:</strong> @Html.DisplayFor(modelItem => item.Date)<br>
                     <strong>@SharedLocalizer["Theater"]:</strong> @Html.DisplayFor(modelItem => item.Theater.Name)<br>
+                    <strong>@SharedLocalizer["Cinema"]:</strong> @Html.DisplayFor(modelItem => item.Theater.Cinema.Name), @Html.DisplayFor(modelItem => item.Theater.Cinema.City)<br>
                     <strong>@SharedLocalizer["CapacityOpen"]:</strong> @((item.Theater.Capacity) - item.SeatsBooked)
                 </p>
                 <a href="@item.Movie.ImagePath" target="_blank">

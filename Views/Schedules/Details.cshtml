@@ -40,6 +40,9 @@
                     <dt class="col-sm-4">@SharedLocalizer["Theater"]</dt>
                     <dd class="col-sm-8">@Html.DisplayFor(model => model.Theater.Name)</dd>
 
+                    <dt class="col-sm-4">@SharedLocalizer["Cinema"]</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Theater.Cinema.Name), @Html.DisplayFor(model => model.Theater.Cinema.City)</dd>
+
                     
                 </dl>
             </div>

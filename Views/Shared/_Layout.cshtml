@@ -61,8 +61,8 @@
                                 }
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="/?ui-culture=de-DE">DE</a></li>
-                                <li><a class="dropdown-item" href="/?ui-culture=en-US">EN</a></li>
+                                <li><a class="dropdown-item" href="/Language/SetCulture?culture=de-DE&returnUrl=@Uri.EscapeDataString(Context.Request.Path + Context.Request.QueryString)">DE</a></li>
+                                <li><a class="dropdown-item" href="/Language/SetCulture?culture=en-US&returnUrl=@Uri.EscapeDataString(Context.Request.Path + Context.Request.QueryString)">EN</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -89,28 +89,3 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Function to update language switcher links
-        function updateLanguageLinks() {
-            var currentUrl = window.location.href;
-            var baseUrl = currentUrl.split('?')[0]; // Split URL at the query string and take the first part
-            var newUrlDe = `${baseUrl}?ui-culture=de-DE`;
-            var newUrlEn = `${baseUrl}?ui-culture=en-US`;
-
-            // If there's already a query string, append ui-culture parameter instead of overwriting
-            if (currentUrl.includes('?')) {
-                newUrlDe = `${baseUrl}&ui-culture=de-DE`;
-                newUrlEn = `${baseUrl}&ui-culture=en-US`;
-            }
-
-            // Update href attributes for DE and EN links
-            document.querySelector('a.dropdown-item[href*="ui-culture=de-DE"]').setAttribute('href', newUrlDe);
-            document.querySelector('a.dropdown-item[href*="ui-culture=en-US"]').setAttribute('href', newUrlEn);
-        }
-
-        // Update links immediately on load
-        updateLanguageLinks();
-    });
-</script>

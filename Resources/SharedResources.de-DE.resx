@@ -204,9 +204,6 @@
   <data name="ImagePath" xml:space="preserve">
     <value>Titelbild</value>
   </data>
-  <data name="Informations" xml:space="preserve">
-    <value>Informationen</value>
-  </data>
   <data name="Login" xml:space="preserve">
     <value>Anmelden</value>
   </data>
