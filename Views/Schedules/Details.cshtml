@@ -1,10 +1,14 @@
 ﻿@model TopMovie_SemesterarbeitSSE.Models.Schedule
 @using Microsoft.Extensions.Localization
+@using System.Globalization
 
 @inject IStringLocalizer<SharedResources> SharedLocalizer
 
 @{
     ViewData["Title"] = "Details";
+    var date = Model.Date.ToDateTime(TimeOnly.MinValue); // Convert DateOnly to DateTime
+    var dayOfWeek = date.ToString("dddd", CultureInfo.InvariantCulture); // Get English day name
+    var localizedDayName = SharedLocalizer[dayOfWeek];
 }
 
 <h1 class="mb-4">Details</h1>
@@ -24,8 +28,7 @@
 
                     <dt class="col-sm-4">@SharedLocalizer["Date"]</dt>
                     <dd class="col-sm-8">
-                        @SharedLocalizer[@Model.Date.ToDateTime(TimeOnly.MinValue).ToString("dddd")],
-                        @Html.DisplayFor(modelItem => Model.Date)
+                        @localizedDayName, @Html.DisplayFor(modelItem => Model.Date)
                     </dd>
 
                     <dt class="col-sm-4">@SharedLocalizer["Movie"]</dt>
@@ -45,7 +48,6 @@
 
                     <dt class="col-sm-4">@SharedLocalizer["Cinema"]</dt>
                     <dd class="col-sm-8">@Html.DisplayFor(model => model.Theater.Cinema.Name), @Html.DisplayFor(model => model.Theater.Cinema.City)</dd>
-
                     
                 </dl>
             </div>

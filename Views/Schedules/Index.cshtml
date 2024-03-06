@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.Extensions.Localization
+@using System.Globalization
 
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
@@ -10,9 +11,13 @@
 
 @{
     ViewData["Title"] = @SharedLocalizer["Schedules"];
+
 }
 
 <h1>@SharedLocalizer["Schedules"]</h1>
+<p>
+    <a asp-action="Index">@SharedLocalizer["Back to List"]</a>
+</p>
 
 @if (User.IsInRole("Admin"))
 {
@@ -24,28 +29,38 @@
 <div class="row">
     @foreach (var item in Model)
     {
+        var dateTime = item.Date.ToDateTime(TimeOnly.MinValue); // Convert DateOnly to DateTime
+        var dayOfWeek = dateTime.DayOfWeek.ToString(); // Get the day of the week as a string
+        var localizedDayName = SharedLocalizer[dayOfWeek];
+
         <div class="col-md-3 col-sm-6 mb-3">
         <div class="card text-black border-dark mb-3 m-2" style="max-width: 20rem;width: 20rem;">
             <div class="card-header"><strong>@Html.DisplayFor(modelItem => item.Movie.Title)</strong></div>
             <div class="card-body">
                 <p class="card-text text-black">
                     <strong>@SharedLocalizer["Time"]:</strong> @Html.DisplayFor(modelItem => item.Time)<br>
-                    <strong>@SharedLocalizer["Date"]:</strong> @SharedLocalizer[@item.Date.ToDateTime(TimeOnly.MinValue).ToString("dddd")], @Html.DisplayFor(modelItem => item.Date)<br>
+                    <strong>@SharedLocalizer["Date"]:</strong> @localizedDayName, @Html.DisplayFor(modelItem => item.Date)<br>
                     <strong>@SharedLocalizer["Theater"]:</strong> @Html.DisplayFor(modelItem => item.Theater.Name)<br>
                     <strong>@SharedLocalizer["Cinema"]:</strong> @Html.DisplayFor(modelItem => item.Theater.Cinema.Name), @Html.DisplayFor(modelItem => item.Theater.Cinema.City)<br>
-                    <strong>@SharedLocalizer["CapacityOpen"]:</strong> @((item.Theater.Capacity) - item.SeatsBooked)
                 </p>
                 <a href="@item.Movie.ImagePath" target="_blank">
                     <img src="@item.Movie.ImagePath" class="card-img" style="max-height: 300px; max-width: 200px" alt="Movie image" />
                 </a>
+                    <p></p>
+                    <p><strong>@SharedLocalizer["CapacityOpen"]:</strong> @((item.Theater.Capacity) - item.SeatsBooked)</p>
+                @if (User.Identity.IsAuthenticated){
                 <div class="mt-3 d-flex align-items-center">
                     <form asp-controller="Schedules" asp-action="SelectSeats" method="post" class="w-100 d-flex align-items-center">
                         <input type="hidden" name="scheduleId" value="@item.Id" />
                         <input type="number" name="numberOfSeats" class="form-control" style="max-width: 100px; margin-right: 10px;" min="1" placeholder=@Localizer["Seats"] required />
                         <button type="submit" class="btn btn-secondary"> @Localizer["Book Seats"]</button>
                     </form>
-                </div>
-
+                        </div>
+                    } else
+                    {
+                        <p></p>
+                        <p>Please login before booking your seats.</p>
+                    }
             </div>
             <div class="card-footer">
                 @await Html.PartialAsync("_CRUDPartial", item)
@@ -54,6 +69,7 @@
         </div>
     }
 </div>
+
 
 <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
     <div class="modal-dialog">
