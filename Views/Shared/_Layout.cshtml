@@ -44,8 +44,10 @@
                             <a class="nav-link text-white" asp-area="" asp-controller="Schedules" asp-action="Index">@SharedLocalizer["Schedules"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Schedules" asp-action="SearchForm">@SharedLocalizer["Search"]</a>
-                        </li>
+                            <form class="form-inline" asp-action="ShowSearch">
+                                <input class="form-control mr-sm-2" type="search" placeholder="@SharedLocalizer["Search"]" aria-label="Search" name="SearchPhrase">
+                            </form>
+                        </li>                        
                     </ul>
 
                     <ul class="navbar-nav">

@@ -23,7 +23,10 @@
                     <dd class="col-sm-8">@Html.DisplayFor(model => model.Time)</dd>
 
                     <dt class="col-sm-4">@SharedLocalizer["Date"]</dt>
-                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Date)</dd>
+                    <dd class="col-sm-8">
+                        @SharedLocalizer[@Model.Date.ToDateTime(TimeOnly.MinValue).ToString("dddd")],
+                        @Html.DisplayFor(modelItem => Model.Date)
+                    </dd>
 
                     <dt class="col-sm-4">@SharedLocalizer["Movie"]</dt>
                     <dd class="col-sm-8">@Html.DisplayFor(model => model.Movie.Title)</dd>

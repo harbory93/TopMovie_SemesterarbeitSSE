@@ -129,9 +129,6 @@
   <data name="Close" xml:space="preserve">
     <value>Schliessen</value>
   </data>
-  <data name="Create New" xml:space="preserve">
-    <value>Vorführung erstellen</value>
-  </data>
   <data name="NotEnoughSeats" xml:space="preserve">
     <value>Leider sind keine Sitze mehr verfügbar.</value>
   </data>

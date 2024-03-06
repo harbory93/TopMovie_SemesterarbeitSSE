@@ -21,21 +21,22 @@
     </p>
 }
 
-<div class="d-flex flex-wrap justify-content-start">
+<div class="row">
     @foreach (var item in Model)
     {
-        <div class="card text-black border-dark mb-3 m-2" style="max-width: 24rem;">
+        <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card text-black border-dark mb-3 m-2" style="max-width: 20rem;width: 20rem;">
             <div class="card-header"><strong>@Html.DisplayFor(modelItem => item.Movie.Title)</strong></div>
             <div class="card-body">
                 <p class="card-text text-black">
                     <strong>@SharedLocalizer["Time"]:</strong> @Html.DisplayFor(modelItem => item.Time)<br>
-                    <strong>@SharedLocalizer["Date"]:</strong> @Html.DisplayFor(modelItem => item.Date)<br>
+                    <strong>@SharedLocalizer["Date"]:</strong> @SharedLocalizer[@item.Date.ToDateTime(TimeOnly.MinValue).ToString("dddd")], @Html.DisplayFor(modelItem => item.Date)<br>
                     <strong>@SharedLocalizer["Theater"]:</strong> @Html.DisplayFor(modelItem => item.Theater.Name)<br>
                     <strong>@SharedLocalizer["Cinema"]:</strong> @Html.DisplayFor(modelItem => item.Theater.Cinema.Name), @Html.DisplayFor(modelItem => item.Theater.Cinema.City)<br>
                     <strong>@SharedLocalizer["CapacityOpen"]:</strong> @((item.Theater.Capacity) - item.SeatsBooked)
                 </p>
                 <a href="@item.Movie.ImagePath" target="_blank">
-                    <img src="@item.Movie.ImagePath" class="card-img" style="max-height: 300px" alt="Movie image" />
+                    <img src="@item.Movie.ImagePath" class="card-img" style="max-height: 300px; max-width: 200px" alt="Movie image" />
                 </a>
                 <div class="mt-3 d-flex align-items-center">
                     <form asp-controller="Schedules" asp-action="SelectSeats" method="post" class="w-100 d-flex align-items-center">
@@ -49,6 +50,7 @@
             <div class="card-footer">
                 @await Html.PartialAsync("_CRUDPartial", item)
             </div>
+        </div>
         </div>
     }
 </div>

@@ -117,4 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Dienstag" xml:space="preserve">
+    <value>Tuesday</value>
+  </data>
+  <data name="Donnerstag" xml:space="preserve">
+    <value>Thursday</value>
+  </data>
+  <data name="Freitag" xml:space="preserve">
+    <value>Friday</value>
+  </data>
+  <data name="Mittwoch" xml:space="preserve">
+    <value>Wednesday</value>
+  </data>
+  <data name="Montag" xml:space="preserve">
+    <value>Monday</value>
+  </data>
+  <data name="Samstag" xml:space="preserve">
+    <value>Saturday</value>
+  </data>
+  <data name="Sonntag" xml:space="preserve">
+    <value>Sunday</value>
+  </data>
 </root>
