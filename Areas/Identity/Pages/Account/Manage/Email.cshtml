@@ -34,12 +34,6 @@
                     <label asp-for="Email" class="form-label">@SharedLocalizer["Email"]</label>
                 </div>
             }
-            <div class="form-floating mb-3">
-                <input asp-for="Input.NewEmail" class="form-control" autocomplete="email" aria-required="true" placeholder="Please enter new email." />
-                <label asp-for="Input.NewEmail" class="form-label">@SharedLocalizer["New email"]</label>
-                <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
-            </div>
-            <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="w-100 btn btn-lg btn-primary">@SharedLocalizer["Change email"]</button>
         </form>
     </div>
 </div>

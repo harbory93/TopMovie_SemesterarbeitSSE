@@ -21,8 +21,11 @@ body {
   margin-bottom: 60px;
 }
 
+
+
+
 /* Custom Stuff*/
-#registerSubmit, #login-submit {
+#registerSubmit, #login-submit, #change-email-button, #update-password-button {
     background-color: #a61f2f;
     color: #ffffff;
     width: 210px;
@@ -33,4 +36,13 @@ body {
 
 #registerSubmit:hover, #login-submit:hover {
     background-color: #8a1724;
+}
+
+.nav-pills .nav-link.active{
+    color: white !important;
+    background-color: #a61f2f !important;
+}
+
+.userNavbar {
+    color: black !important;
 }

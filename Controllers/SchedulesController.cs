@@ -118,6 +118,7 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
             }
             ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Title", schedule.MovieId);
             ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Name", schedule.TheaterId);
+            ViewBag.ScheduleTimesSelectList = EnumHelper.GetSelectListForEnum<EScheduleTimes>();
             return View(schedule);
         }
 

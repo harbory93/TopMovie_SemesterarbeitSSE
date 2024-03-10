@@ -21,35 +21,25 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Time" class="control-label">@SharedLocalizer["Time"]</label>
-                <select asp-for="Time" class="form-control">
-                    <option value=""></option>
-                    @foreach (var time in Enum.GetValues(typeof(EScheduleTimes)))
-                    {
-                        var displayAttribute = typeof(EScheduleTimes)
-                        .GetMember(time.ToString())[0]
-                        .GetCustomAttributes(typeof(DisplayAttribute), false)
-                        .SingleOrDefault() as DisplayAttribute;
-                        var displayName = displayAttribute?.Name ?? time.ToString();
-
-                        <option value="@time">@displayName</option>
-                    }
-                </select>
-                <span asp-validation-for="Time" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label">@SharedLocalizer["Date"]</label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="Time" class="control-label">@SharedLocalizer["Time"]</label>
+                    <select asp-for="Time" class="form-control" asp-items="ViewBag.ScheduleTimesSelectList">
+                        <option value="" selected disabled hidden>@SharedLocalizer["Select Time"]</option>
+                    </select>
+                    <span asp-validation-for="Time" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Date" class="control-label">@SharedLocalizer["Date"]</label>
+                    <input asp-for="Date" class="form-control" type="date" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
             <div class="form-group">
                 <label asp-for="MovieId" class="control-label">@SharedLocalizer["Film"]</label>
                 <select asp-for="MovieId" class="form-control" asp-items="ViewBag.MovieId"></select>
                 <span asp-validation-for="MovieId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TheaterId" class="control-label">@SharedLocalizer["Projektionssaal"]</label>
+                <label asp-for="TheaterId" class="control-label">@SharedLocalizer["Theater"]</label>
                 <select asp-for="TheaterId" class="form-control" asp-items="ViewBag.TheaterId"></select>
                 <span asp-validation-for="TheaterId" class="text-danger"></span>
             </div>
@@ -70,5 +60,36 @@ else
 }
 
 @section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const datePicker = document.getElementById('Date'); // Ensure the ID matches your date input's ID
+            const scheduleTimes = document.getElementById('Time'); // Ensure the ID matches your time select's ID
+
+            function adjustScheduleTimes() {
+                const selectedDate = new Date(datePicker.value);
+                const dayOfWeek = selectedDate.getDay();
+
+                // Convert all options to an array for easier manipulation
+                const options = Array.from(scheduleTimes.options);
+
+                // Determine if the selected date is a weekend
+                const isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
+
+                options.forEach(option => {
+                    if (option.value === "Time2300") {
+                        // Show or hide the 23:00 option based on whether it's the weekend
+                        option.hidden = !isWeekend;
+                    }
+                });
+            }
+
+            // Adjust schedule times whenever the date changes
+            datePicker.addEventListener('change', adjustScheduleTimes);
+
+            // Initial check in case there's a pre-selected date (though unlikely in a creation form)
+            adjustScheduleTimes();
+        });
+    </script>
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

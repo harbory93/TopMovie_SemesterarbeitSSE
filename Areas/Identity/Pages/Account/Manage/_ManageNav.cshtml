@@ -9,9 +9,8 @@
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
 <ul class="nav nav-pills flex-column">
-    <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">@SharedLocalizer["Email"]</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">@SharedLocalizer["Password"]</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">@SharedLocalizer["Personal data"]</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.BookingsNavClass(ViewContext)" id="bookings" asp-page="./Bookings">@SharedLocalizer["Bookings"] </a></li>
+    <li class="nav-item"><a class="nav-link userNavbar @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">@SharedLocalizer["Email"]</a></li>
+    <li class="nav-item"><a class="nav-link userNavbar @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">@SharedLocalizer["Personal data"]</a></li>
+    <li class="nav-item"><a class="nav-link userNavbar @ManageNavPages.BookingsNavClass(ViewContext)" id="bookings" asp-page="./Bookings">@SharedLocalizer["Bookings"] </a></li>
 
 </ul>

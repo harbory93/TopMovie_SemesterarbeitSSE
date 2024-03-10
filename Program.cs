@@ -100,4 +100,25 @@ using (var scope = app.Services.CreateScope())
 
 }
 
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+    string email = "user@topmovie.ch";
+    string password = "Welcome$1";
+
+    if (await userManager.FindByEmailAsync(email) == null)
+    {
+        var user = new IdentityUser {
+            UserName = email,
+            Email = email
+        };
+
+        await userManager.CreateAsync(user, password);
+
+    }
+
+
+}
+
 app.Run();

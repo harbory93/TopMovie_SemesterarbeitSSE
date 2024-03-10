@@ -123,6 +123,9 @@
   <data name="Are you sure you want to delete this?" xml:space="preserve">
     <value>Sind Sie sicher, dass Sie dies löschen wollen?</value>
   </data>
+  <data name="Are you sure you want to permanently delete your account?" xml:space="preserve">
+    <value>Sind Sie sicher, dass Sie ihr Konto permanent löschen möchten?</value>
+  </data>
   <data name="Back to List" xml:space="preserve">
     <value>Zurück zur Übersicht</value>
   </data>
@@ -141,9 +144,6 @@
   <data name="Change email" xml:space="preserve">
     <value>Email ändern</value>
   </data>
-  <data name="Change password" xml:space="preserve">
-    <value>Passwort ändern</value>
-  </data>
   <data name="Cinema" xml:space="preserve">
     <value>Kino</value>
   </data>
@@ -153,7 +153,7 @@
   <data name="City" xml:space="preserve">
     <value>Stadt</value>
   </data>
-  <data name="Confirm password" xml:space="preserve">
+  <data name="Confirm Password" xml:space="preserve">
     <value>Kennwort bestätigen</value>
   </data>
   <data name="Create" xml:space="preserve">
@@ -165,14 +165,17 @@
   <data name="Create New" xml:space="preserve">
     <value>Neuen Eintrag erstellen</value>
   </data>
-  <data name="Current password" xml:space="preserve">
-    <value>Aktuelles Kennwort</value>
-  </data>
   <data name="Date" xml:space="preserve">
     <value>Datum</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Löschen</value>
+  </data>
+  <data name="Delete data and close my account" xml:space="preserve">
+    <value>Daten löschen und Konto schliessen</value>
+  </data>
+  <data name="Delete Personal Data" xml:space="preserve">
+    <value>Persönliche Daten löschen</value>
   </data>
   <data name="Deleting this data will permanently remove your account, and this cannot be recovered." xml:space="preserve">
     <value>Wenn Sie diese Daten löschen, wird Ihr Konto dauerhaft gelöscht und kann nicht wiederhergestellt werden.</value>
@@ -240,14 +243,14 @@
   <data name="New email" xml:space="preserve">
     <value>Neue Email</value>
   </data>
-  <data name="New password" xml:space="preserve">
-    <value>Neues Kennwort</value>
-  </data>
   <data name="Password" xml:space="preserve">
     <value>Kennwort</value>
   </data>
   <data name="Personal data" xml:space="preserve">
     <value>Persönliche Daten</value>
+  </data>
+  <data name="Please login before booking your seats." xml:space="preserve">
+    <value>Bitte anmelden, bevor Sie Sitze buchen können.</value>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>Profil</value>
@@ -299,9 +302,6 @@
   </data>
   <data name="Tuesday" xml:space="preserve">
     <value>Dienstag</value>
-  </data>
-  <data name="Update password" xml:space="preserve">
-    <value>Kennwort aktualisieren</value>
   </data>
   <data name="Wednesday" xml:space="preserve">
     <value>Mittwoch</value>
