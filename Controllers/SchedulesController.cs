@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TopMovie_SemesterarbeitSSE.Data;
+using TopMovie_SemesterarbeitSSE.Enums;
 using TopMovie_SemesterarbeitSSE.Models;
 
 namespace TopMovie_SemesterarbeitSSE.Controllers
@@ -13,17 +15,43 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
     public class SchedulesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public SchedulesController(ApplicationDbContext context)
+        public SchedulesController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
+            
         }
 
         // GET: Schedules
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Schedule.Include(s => s.Movie).Include(s => s.Theater);
+            var applicationDbContext = _context.Schedule.Include(s => s.Movie).Include(s => s.Theater).ThenInclude(s => s.Cinema);
             return View(await applicationDbContext.ToListAsync());
+        }
+
+        // GET: Schedules/SearchForm
+        public IActionResult SearchForm()
+        {
+            return View();
+        }
+
+        // POST: Schedules/ShowSearch
+        public async Task<IActionResult> ShowSearch(string SearchPhrase)
+        {
+            var applicationDbContext = _context.Schedule
+                .Include(j => j.Movie)
+                .Include(j => j.Theater).ThenInclude(j => j.Cinema)
+                .Where(j => (j.Movie != null && j.Movie.Title.Contains(SearchPhrase)) ||
+                            (j.Movie != null && j.Movie.Description.Contains(SearchPhrase)) ||
+                            (j.Movie != null && j.Movie.Director.Contains(SearchPhrase)) ||
+                            (j.Movie != null && j.Movie.Cast.Contains(SearchPhrase)) ||
+                            (j.Theater != null && j.Theater.Name.Contains(SearchPhrase)) ||
+                            (j.Theater != null && j.Theater.Cinema.Name.Contains(SearchPhrase)) ||
+                            (j.Theater != null && j.Theater.Cinema.City.Contains(SearchPhrase)));
+
+            return View("Index", await applicationDbContext.ToListAsync());
         }
 
         // GET: Schedules/Details/5
@@ -37,6 +65,7 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
             var schedule = await _context.Schedule
                 .Include(s => s.Movie)
                 .Include(s => s.Theater)
+                .ThenInclude(s => s.Cinema)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (schedule == null)
             {
@@ -49,9 +78,11 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
         // GET: Schedules/Create
         public IActionResult Create()
         {
-            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Id");
-            ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Id");
-            return View();
+            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Title");
+            ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Name");
+            ViewBag.ScheduleTimesSelectList = EnumHelper.GetSelectListForEnum<EScheduleTimes>();
+
+            return View();    
         }
 
         // POST: Schedules/Create
@@ -67,8 +98,8 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Id", schedule.MovieId);
-            ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Id", schedule.TheaterId);
+            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Title", schedule.MovieId);
+            ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Name", schedule.TheaterId);
             return View(schedule);
         }
 
@@ -85,8 +116,9 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
             {
                 return NotFound();
             }
-            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Id", schedule.MovieId);
-            ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Id", schedule.TheaterId);
+            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Title", schedule.MovieId);
+            ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Name", schedule.TheaterId);
+            ViewBag.ScheduleTimesSelectList = EnumHelper.GetSelectListForEnum<EScheduleTimes>();
             return View(schedule);
         }
 
@@ -122,8 +154,8 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Id", schedule.MovieId);
-            ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Id", schedule.TheaterId);
+            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Title", schedule.MovieId);
+            ViewData["TheaterId"] = new SelectList(_context.Theater, "Id", "Name", schedule.TheaterId);
             return View(schedule);
         }
 
@@ -161,6 +193,47 @@ namespace TopMovie_SemesterarbeitSSE.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        // POST: Schedules/SelectSeats
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SelectSeats(int scheduleId, int numberOfSeats)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Challenge();
+            }
+
+            var schedule = await _context.Schedule.Include(s => s.Theater).FirstOrDefaultAsync(s => s.Id == scheduleId);
+            if (schedule == null)
+            {
+                return NotFound();
+            }
+
+            var availableSeats = schedule.Theater.Capacity - schedule.SeatsBooked;
+            if (availableSeats >= numberOfSeats)
+            {
+                var booking = new Booking {
+                    UserId = user.Id,
+                    ScheduleId = scheduleId,
+                    NumberOfSeats = numberOfSeats
+                };
+                _context.Booking.Add(booking);
+
+                schedule.SeatsBooked += numberOfSeats;
+                await _context.SaveChangesAsync();
+
+                TempData["MessageKey"] = "BookingSuccess";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["MessageKey"] = "NotEnoughSeats";
+                return RedirectToAction("Index");
+            }
+        }
+
 
         private bool ScheduleExists(int id)
         {

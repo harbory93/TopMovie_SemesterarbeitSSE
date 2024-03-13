@@ -1,0 +1,60 @@
+﻿@page
+@model BookingsModel
+
+@using TopMovie_SemesterarbeitSSE
+@using TopMovie_SemesterarbeitSSE.Enums
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<SharedResources> SharedLocalizer
+
+@{
+    ViewData["Title"] = SharedLocalizer["Bookings"];
+    ViewData["ActivePage"] = ManageNavPages.Bookings;
+}
+
+<h4>@SharedLocalizer["My Bookings"]</h4>
+<div class="row">
+    <div class="col-md-12">
+        @if (Model.Bookings.Count == 0)
+        {
+            <p>@SharedLocalizer["You have no bookings."]</p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>@SharedLocalizer["Date"]</th>
+                        <th>@SharedLocalizer["Time"]</th>
+                        <th>@SharedLocalizer["Movie"]</th>
+                        <th>@SharedLocalizer["Theater"]</th>
+                        <th>@SharedLocalizer["Seats Booked"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var booking in Model.Bookings)
+                    {
+                        <tr>
+                            <td>@booking.Schedule.Date</td>
+                            <td>
+                            @{
+                                var time = booking.Schedule.Time;
+                                var displayAttribute = typeof(EScheduleTimes)
+                                    .GetMember(time.ToString())[0]
+									.GetCustomAttributes(typeof(DisplayAttribute), false)
+									.SingleOrDefault() as DisplayAttribute;
+                                var displayName = displayAttribute?.Name ?? time.ToString();
+                            }
+                            @displayName
+                            </td>
+                            <td>@booking.Schedule.Movie.Title</td>
+                            <td>@booking.Schedule.Theater.Name</td>
+                            <td>@booking.NumberOfSeats</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

@@ -1,53 +1,124 @@
 ﻿@model IEnumerable<TopMovie_SemesterarbeitSSE.Models.Schedule>
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@using System.Globalization
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject IViewLocalizer Localizer
+@inject IStringLocalizer<SharedResources> SharedLocalizer
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = @SharedLocalizer["Schedules"];
+
 }
 
-<h1>Index</h1>
-
+<h1>@SharedLocalizer["Schedules"]</h1>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Index">@SharedLocalizer["Back to List"]</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Time)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Movie)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Theater)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Time)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Movie.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Theater.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-success">@SharedLocalizer["Create New"]</a>
+    </p>
 }
-    </tbody>
-</table>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        var dateTime = item.Date.ToDateTime(TimeOnly.MinValue); // Convert DateOnly to DateTime
+        var dayOfWeek = dateTime.DayOfWeek.ToString(); // Get the day of the week as a string
+        var localizedDayName = SharedLocalizer[dayOfWeek];
+
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card text-black border-dark mb-3 m-2" style="max-width: 20rem;width: 20rem;">
+                <div class="card-header"><strong>@Html.DisplayFor(modelItem => item.Movie.Title)</strong></div>
+                <div class="card-body">
+                    <p class="card-text text-black">
+                        <strong>@SharedLocalizer["Time"]:</strong> @Html.DisplayFor(modelItem => item.Time)<br>
+                        <strong>@SharedLocalizer["Date"]:</strong> @localizedDayName, @Html.DisplayFor(modelItem => item.Date)<br>
+                        <strong>@SharedLocalizer["Theater"]:</strong> @Html.DisplayFor(modelItem => item.Theater.Name)<br>
+                        <strong>@SharedLocalizer["Cinema"]:</strong> @Html.DisplayFor(modelItem => item.Theater.Cinema.Name), @Html.DisplayFor(modelItem => item.Theater.Cinema.City)<br>
+                    </p>
+                    <a href="@item.Movie.ImagePath" target="_blank">
+                        <img src="@item.Movie.ImagePath" class="card-img" style="max-height: 300px; max-width: 200px" alt="Movie image" />
+                    </a>
+                        <p></p>
+                        <p><strong>@SharedLocalizer["CapacityOpen"]:</strong> @((item.Theater.Capacity) - item.SeatsBooked)</p>
+                    @if (User.Identity.IsAuthenticated){
+                    <div class="mt-3 d-flex align-items-center">
+                        <form asp-controller="Schedules" asp-action="SelectSeats" method="post" class="w-100 d-flex align-items-center">
+                            <input type="hidden" name="scheduleId" value="@item.Id" />
+                            <input type="number" name="numberOfSeats" class="form-control" style="max-width: 100px; margin-right: 10px;" min="1" placeholder=@Localizer["Seats"] required />
+                            <button type="submit" class="btn btn-secondary"> @Localizer["Book Seats"]</button>
+                        </form>
+                            </div>
+                        } else
+                        {
+                            <p></p>
+                            <p>@SharedLocalizer["Please login before booking your seats."]</p>
+                        }
+                </div>
+                <div class="card-footer">
+                        <td>
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn mb-2" style="background-color: #a61f2f; color: #ffffff; width: 260px; justify-content: center; font-size: 15px; border: none;">
+                                    <i class="bi bi-eye" style="margin-right: 5px;"></i> @SharedLocalizer["Details"]
+                                </a>
+                            </div>
+
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div style="display: flex; justify-content: center; gap: 10px;">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary" style="width: 125px; justify-content: center; font-size: 15px;">
+                                        <i class="bi bi-pencil" style="margin-right: 5px;"></i> @SharedLocalizer["Edit"]
+                                    </a>
+
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" style="width: 125px; justify-content: center; font-size: 15px;">
+                                        <i class="bi bi-trash" style="margin-right: 5px;"></i> @SharedLocalizer["Delete"]
+                                    </a>
+                                </div>
+                            }
+                        </td>
+                </div>
+            </div>
+
+        </div>
+    }
+</div>
+
+
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="feedbackModalLabel">@Localizer["Booking Feedback"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">@Localizer["Close"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (TempData["MessageKey"] != null)
+{
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var localizedMessage = "@Html.Raw(@Localizer[TempData["MessageKey"].ToString()].Value)";
+
+            var modalBody = document.querySelector('#feedbackModal .modal-body');
+            modalBody.textContent = localizedMessage;
+            var feedbackModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
+            feedbackModal.show();
+        });
+    </script>
+}

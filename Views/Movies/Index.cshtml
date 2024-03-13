@@ -1,38 +1,46 @@
 ﻿@model IEnumerable<TopMovie_SemesterarbeitSSE.Models.Movie>
 
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject IViewLocalizer Localizer
+@inject IStringLocalizer<SharedResources> SharedLocalizer
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = @SharedLocalizer["Movies"];
 }
 
-<h1>Index</h1>
+@if (User.IsInRole("Admin"))
+{
+    <h1>@SharedLocalizer["Movies"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">@SharedLocalizer["Create New"]</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @SharedLocalizer["ImagePath"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @SharedLocalizer["Title"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Genre)
+                @SharedLocalizer["Genre"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Director)
+                @SharedLocalizer["Director"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cast)
+                @SharedLocalizer["Duration"]
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Duration)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImagePath)
-            </th>
+
+            <th></th>
             <th></th>
         </tr>
     </thead>
@@ -40,32 +48,31 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                <a href="@item.ImagePath" target="_blank">
+                    <img src="@item.ImagePath" style="max-width: 100px; max-height: 100px;" />
+                </a>
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
+                @Html.DisplayFor(modelItem =>item.Genre)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Director)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cast)
+                @Html.DisplayFor(modelItem => item.Duration) min.
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Duration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImagePath)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @await Html.PartialAsync("_CRUDPartial", item)
             </td>
         </tr>
 }
     </tbody>
 </table>
+}
+else
+{
+    await Html.RenderPartialAsync("_AccessDenied", "Access denied");
+}

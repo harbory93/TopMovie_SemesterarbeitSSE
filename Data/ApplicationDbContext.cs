@@ -14,5 +14,6 @@ namespace TopMovie_SemesterarbeitSSE.Data
         public DbSet<TopMovie_SemesterarbeitSSE.Models.Cinema> Cinema { get; set; } = default!;
         public DbSet<TopMovie_SemesterarbeitSSE.Models.Theater> Theater { get; set; } = default!;
         public DbSet<TopMovie_SemesterarbeitSSE.Models.Schedule> Schedule { get; set; } = default!;
+        public DbSet<TopMovie_SemesterarbeitSSE.Models.Booking> Booking { get; set; } = default!;
     }
 }

@@ -1,0 +1,29 @@
+﻿@page
+@model PersonalDataModel
+
+@using TopMovie_SemesterarbeitSSE
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<SharedResources> SharedLocalizer
+
+@{
+    ViewData["Title"] = SharedLocalizer["Personal data"];
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+<h3>@ViewData["Title"]</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        <p>
+            <strong>@SharedLocalizer["Are you sure you want to permanently delete your account?"]</strong>
+        </p>
+        <p>
+            <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">@SharedLocalizer["Delete"]</a>
+        </p>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

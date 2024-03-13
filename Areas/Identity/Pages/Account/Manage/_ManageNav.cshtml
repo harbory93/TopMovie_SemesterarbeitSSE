@@ -1,0 +1,16 @@
+﻿@inject SignInManager<IdentityUser> SignInManager
+
+@using TopMovie_SemesterarbeitSSE
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<SharedResources> SharedLocalizer 
+
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+<ul class="nav nav-pills flex-column">
+    <li class="nav-item"><a class="nav-link userNavbar @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">@SharedLocalizer["Email"]</a></li>
+    <li class="nav-item"><a class="nav-link userNavbar @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">@SharedLocalizer["Personal data"]</a></li>
+    <li class="nav-item"><a class="nav-link userNavbar @ManageNavPages.BookingsNavClass(ViewContext)" id="bookings" asp-page="./Bookings">@SharedLocalizer["Bookings"] </a></li>
+
+</ul>

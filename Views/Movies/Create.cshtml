@@ -1,62 +1,73 @@
 ﻿@model TopMovie_SemesterarbeitSSE.Models.Movie
 
+@using TopMovie_SemesterarbeitSSE.Enums
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<SharedResources> SharedLocalizer
+
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = @SharedLocalizer["Create"];
 }
 
-<h1>Create</h1>
+@if (User.IsInRole("Admin"))
+{
+<h1>@SharedLocalizer["Create"]</h1>
 
-<h4>Movie</h4>
+<h4>@SharedLocalizer["Movie"]</h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
+                <label asp-for="Title" class="control-label">@SharedLocalizer["Title"]</label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
+                <label asp-for="Description" class="control-label">@SharedLocalizer["Description"]</label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Genre" class="control-label"></label>
-                <select asp-for="Genre" class="form-control"></select>
+                <label asp-for="Genre" class="control-label">@SharedLocalizer["Genre"]</label>
+                <select asp-for="Genre" class="form-control" asp-items="Html.GetEnumSelectList<EMovieGenres>()">
+                    <option value="">@SharedLocalizer["Select Genre"]</option>
+                    </select>
                 <span asp-validation-for="Genre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Director" class="control-label"></label>
+                <label asp-for="Director" class="control-label">@SharedLocalizer["Director"]</label>
                 <input asp-for="Director" class="form-control" />
                 <span asp-validation-for="Director" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Cast" class="control-label"></label>
+                <label asp-for="Cast" class="control-label">@SharedLocalizer["Cast"]</label>
                 <input asp-for="Cast" class="form-control" />
                 <span asp-validation-for="Cast" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Duration" class="control-label"></label>
+                <label asp-for="Duration" class="control-label">@SharedLocalizer["Duration"]</label>
                 <input asp-for="Duration" class="form-control" />
                 <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImagePath" class="control-label"></label>
+                <label asp-for="ImagePath" class="control-label">@SharedLocalizer["ImagePath"]</label>
                 <input asp-for="ImagePath" class="form-control" />
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div>
+               @await Html.PartialAsync("_SaveOverviewButtonsPartial")
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+}
+else
+{
+    await Html.RenderPartialAsync("_AccessDenied", "Access denied");
+}
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

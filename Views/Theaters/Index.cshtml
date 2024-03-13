@@ -1,26 +1,33 @@
 ﻿@model IEnumerable<TopMovie_SemesterarbeitSSE.Models.Theater>
 
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<SharedResources> SharedLocalizer
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = SharedLocalizer["Theaters"];
 }
 
-<h1>Index</h1>
+@if (User.IsInRole("Admin"))
+{
+<h1>@SharedLocalizer["Theaters"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">@SharedLocalizer["Create New"]</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @SharedLocalizer["Name"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Capacity)
+                @SharedLocalizer["Capacity"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cinema)
+                @SharedLocalizer["Cinema"]
             </th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
@@ -34,14 +41,17 @@
                 @Html.DisplayFor(modelItem => item.Capacity)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cinema.Id)
+                @Html.DisplayFor(modelItem => item.Cinema.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @await Html.PartialAsync("_CRUDPartial", item)
             </td>
         </tr>
 }
     </tbody>
 </table>
+}
+else
+{
+    await Html.RenderPartialAsync("_AccessDenied", "Access denied");
+}

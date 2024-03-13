@@ -6,11 +6,13 @@ namespace TopMovie_SemesterarbeitSSE.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public int Capacity { get; set; }
 
         // Relationships
         public int CinemaId { get; set; }
         public Cinema? Cinema { get; set; }
+
+        public ICollection<Schedule>? Schedules { get; set; }
     }
 }

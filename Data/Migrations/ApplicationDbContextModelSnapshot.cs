@@ -224,6 +224,33 @@ namespace TopMovie_SemesterarbeitSSE.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("TopMovie_SemesterarbeitSSE.Models.Booking", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("NumberOfSeats")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ScheduleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScheduleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Booking");
+                });
+
             modelBuilder.Entity("TopMovie_SemesterarbeitSSE.Models.Cinema", b =>
                 {
                     b.Property<int>("Id")
@@ -300,6 +327,9 @@ namespace TopMovie_SemesterarbeitSSE.Data.Migrations
                         .HasColumnType("date");
 
                     b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SeatsBooked")
                         .HasColumnType("int");
 
                     b.Property<int>("TheaterId")
@@ -393,16 +423,35 @@ namespace TopMovie_SemesterarbeitSSE.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TopMovie_SemesterarbeitSSE.Models.Booking", b =>
+                {
+                    b.HasOne("TopMovie_SemesterarbeitSSE.Models.Schedule", "Schedule")
+                        .WithMany()
+                        .HasForeignKey("ScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Schedule");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("TopMovie_SemesterarbeitSSE.Models.Schedule", b =>
                 {
                     b.HasOne("TopMovie_SemesterarbeitSSE.Models.Movie", "Movie")
-                        .WithMany()
+                        .WithMany("Schedules")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TopMovie_SemesterarbeitSSE.Models.Theater", "Theater")
-                        .WithMany()
+                        .WithMany("Schedules")
                         .HasForeignKey("TheaterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -426,6 +475,16 @@ namespace TopMovie_SemesterarbeitSSE.Data.Migrations
             modelBuilder.Entity("TopMovie_SemesterarbeitSSE.Models.Cinema", b =>
                 {
                     b.Navigation("Theaters");
+                });
+
+            modelBuilder.Entity("TopMovie_SemesterarbeitSSE.Models.Movie", b =>
+                {
+                    b.Navigation("Schedules");
+                });
+
+            modelBuilder.Entity("TopMovie_SemesterarbeitSSE.Models.Theater", b =>
+                {
+                    b.Navigation("Schedules");
                 });
 #pragma warning restore 612, 618
         }

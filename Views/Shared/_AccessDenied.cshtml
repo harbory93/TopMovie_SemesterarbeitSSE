@@ -1,0 +1,8 @@
+﻿@model string
+
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<SharedResources> SharedLocalizer
+
+<meta http-equiv="refresh" content="5;url=/Identity/Account/Login" />
+<h1 class="text-danger">@SharedLocalizer[@Model], @SharedLocalizer["you will be redirected to the login page."]</h1>

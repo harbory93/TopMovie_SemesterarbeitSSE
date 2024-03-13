@@ -1,4 +1,6 @@
-﻿namespace TopMovie_SemesterarbeitSSE.Enums
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TopMovie_SemesterarbeitSSE.Enums
 {
     public enum EMovieGenres
     {

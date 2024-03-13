@@ -1,49 +1,93 @@
 ﻿@model TopMovie_SemesterarbeitSSE.Models.Schedule
 
+@using System.ComponentModel.DataAnnotations
+@using TopMovie_SemesterarbeitSSE.Enums
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<SharedResources> SharedLocalizer
+
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = @SharedLocalizer["Edit"];
 }
 
-<h1>Edit</h1>
+@if (User.IsInRole("Admin"))
+{
+<h1>@SharedLocalizer["Edit"]</h1>
 
-<h4>Schedule</h4>
+<h4>@SharedLocalizer["Schedule"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Time" class="control-label">@SharedLocalizer["Time"]</label>
+                    <select asp-for="Time" class="form-control" asp-items="ViewBag.ScheduleTimesSelectList">
+                        <option value="" selected disabled hidden>@SharedLocalizer["Select Time"]</option>
+                    </select>
+                    <span asp-validation-for="Time" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Date" class="control-label">@SharedLocalizer["Date"]</label>
+                    <input asp-for="Date" class="form-control" type="date" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
             <div class="form-group">
-                <label asp-for="Time" class="control-label"></label>
-                <select asp-for="Time" class="form-control"></select>
-                <span asp-validation-for="Time" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MovieId" class="control-label"></label>
+                <label asp-for="MovieId" class="control-label">@SharedLocalizer["Film"]</label>
                 <select asp-for="MovieId" class="form-control" asp-items="ViewBag.MovieId"></select>
                 <span asp-validation-for="MovieId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TheaterId" class="control-label"></label>
+                <label asp-for="TheaterId" class="control-label">@SharedLocalizer["Theater"]</label>
                 <select asp-for="TheaterId" class="form-control" asp-items="ViewBag.TheaterId"></select>
                 <span asp-validation-for="TheaterId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div>
+                @await Html.PartialAsync("_SaveOverviewButtonsPartial")
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+}
+else
+{
+    await Html.RenderPartialAsync("_AccessDenied", "Access denied");
+}
 
 @section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const datePicker = document.getElementById('Date'); // Ensure the ID matches your date input's ID
+            const scheduleTimes = document.getElementById('Time'); // Ensure the ID matches your time select's ID
+
+            function adjustScheduleTimes() {
+                const selectedDate = new Date(datePicker.value);
+                const dayOfWeek = selectedDate.getDay();
+
+                // Convert all options to an array for easier manipulation
+                const options = Array.from(scheduleTimes.options);
+
+                // Determine if the selected date is a weekend
+                const isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
+
+                options.forEach(option => {
+                    if (option.value === "Time2300") {
+                        // Show or hide the 23:00 option based on whether it's the weekend
+                        option.hidden = !isWeekend;
+                    }
+                });
+            }
+
+            // Adjust schedule times whenever the date changes
+            datePicker.addEventListener('change', adjustScheduleTimes);
+
+            // Initial check in case there's a pre-selected date (though unlikely in a creation form)
+            adjustScheduleTimes();
+        });
+    </script>
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

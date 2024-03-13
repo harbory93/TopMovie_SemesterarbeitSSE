@@ -7,13 +7,16 @@ namespace TopMovie_SemesterarbeitSSE.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public EMovieGenres Genre { get; set; }
-        public string Director { get; set; }
-        public string Cast { get; set; }
+        public string Director { get; set; } = string.Empty;
+        public string Cast { get; set; } = string.Empty;
         public int Duration { get; set; }
-        public string ImagePath { get; set; }
+        public string ImagePath { get; set; } = string.Empty;
+
+        // Relationship
+        public ICollection<Schedule>? Schedules { get; set; }
 
     }
 }
