@@ -21,17 +21,18 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="Date" class="control-label">@SharedLocalizer["Date"]</label>
+                <input asp-for="Date" class="form-control" type="date" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Time" class="control-label">@SharedLocalizer["Time"]</label>
                 <select asp-for="Time" class="form-control" asp-items="ViewBag.ScheduleTimesSelectList">
                     <option value="" selected disabled hidden>@SharedLocalizer["Select Time"]</option>
                     </select>
                 <span asp-validation-for="Time" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label">@SharedLocalizer["Date"]</label>
-                <input asp-for="Date" class="form-control" type="date" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="MovieId" class="control-label">@SharedLocalizer["Movie"]</label>
                 <select asp-for="MovieId" class ="form-control" asp-items="ViewBag.MovieId"></select>
@@ -40,16 +41,14 @@
                 <label asp-for="TheaterId" class="control-label">@SharedLocalizer["Theater"]</label>
                 <select asp-for="TheaterId" class ="form-control" asp-items="ViewBag.TheaterId"></select>
             </div>
-            <div class="form-group">
-                <input type="submit" value=@SharedLocalizer["Create"] class="btn btn-success" style="margin-top: 5px;" />
+            <div>
+                @await Html.PartialAsync("_SaveOverviewButtonsPartial")
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">@SharedLocalizer["Back to List"]</a>
-</div>
+
 }
 else
 {

@@ -1,0 +1,7 @@
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResources> SharedLocalizer
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">@SharedLocalizer["Edit"]</a> |
+    <a asp-action="Index" class="btn btn-secondary">@SharedLocalizer["Back to List"]</a>
+</div>

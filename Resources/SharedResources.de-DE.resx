@@ -151,7 +151,7 @@
     <value>Kinos</value>
   </data>
   <data name="City" xml:space="preserve">
-    <value>Stadt</value>
+    <value>Ort</value>
   </data>
   <data name="Confirm Password" xml:space="preserve">
     <value>Kennwort bestätigen</value>
@@ -265,10 +265,10 @@
     <value>Speichern</value>
   </data>
   <data name="Schedule" xml:space="preserve">
-    <value>Vorführung</value>
+    <value>Vorstellung</value>
   </data>
   <data name="Schedules" xml:space="preserve">
-    <value>Vorführungen</value>
+    <value>Vorstellungen</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Suchen</value>

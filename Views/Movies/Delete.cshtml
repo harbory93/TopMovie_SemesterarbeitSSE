@@ -60,12 +60,13 @@
             @Html.DisplayFor(model => model.Duration)
         </dd>        
     </dl>
-    
-    <form asp-action="Delete">
+
+    <form asp-action="Delete" method="post">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value=@SharedLocalizer["Delete"] class="btn btn-danger" /> |
-        <a asp-action="Index">@SharedLocalizer["Back to List"]</a>
+        <input type="submit" value="@SharedLocalizer["Delete"]" class="btn btn-danger" />
+        | <a asp-action="Index" class="btn btn-secondary">@SharedLocalizer["Back to List"]</a>
     </form>
+
 </div>
 }
 else

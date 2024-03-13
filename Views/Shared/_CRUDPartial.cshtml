@@ -1,25 +1,22 @@
 ﻿@using Microsoft.Extensions.Localization
-
 @inject IStringLocalizer<SharedResources> SharedLocalizer
 
-<td>
-    <div style="display: flex; flex-direction: column; align-items: center;">
-        <a asp-action="Details" asp-route-id="@Model.Id" class="btn mb-2" style="background-color: #a61f2f; color: #ffffff; width: 210px; justify-content: center; font-size: 15px; border: none;">
-            <i class="bi bi-eye" style="margin-right: 5px;"></i> @SharedLocalizer["Details"]
-        </a>
-    </div>
-
+<div style="text-align: center;">
+    <!-- Details Button -->
+    <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary mb-2" style="background-color: #a61f2f; color: #ffffff;width: 240px; display: block; margin: auto;">
+        <i class="bi bi-eye" style="margin-right: 5px;"></i> @SharedLocalizer["Details"]
+    </a>
 
     @if (User.IsInRole("Admin"))
     {
-        <div style="display: flex; justify-content: center; gap: 10px;">
-            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary" style="width: 100px; justify-content: center; font-size: 15px;">
-                <i class="bi bi-pencil" style="margin-right: 5px;"></i> @SharedLocalizer["Edit"]
-            </a>
+        <!-- Edit Button -->
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary mb-2" style="width: 240px; display: block; margin: auto;">
+            <i class="bi bi-pencil" style="margin-right: 5px;"></i> @SharedLocalizer["Edit"]
+        </a>
 
-            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger" style="width: 100px; justify-content: center; font-size: 15px;">
-                <i class="bi bi-trash" style="margin-right: 5px;"></i> @SharedLocalizer["Delete"]
-            </a>
-        </div>
+        <!-- Delete Button -->
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger" style="width: 240px; display: block; margin: auto;">
+            <i class="bi bi-trash" style="margin-right: 5px;"></i> @SharedLocalizer["Delete"]
+        </a>
     }
-</td>
+</div>

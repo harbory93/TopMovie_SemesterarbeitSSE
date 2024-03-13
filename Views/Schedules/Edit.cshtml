@@ -43,16 +43,14 @@
                 <select asp-for="TheaterId" class="form-control" asp-items="ViewBag.TheaterId"></select>
                 <span asp-validation-for="TheaterId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value=@SharedLocalizer["Save"] class="btn btn-primary" style="margin-top: 5px;" />
+            <div>
+                @await Html.PartialAsync("_SaveOverviewButtonsPartial")
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">@SharedLocalizer["Back to List"]</a>
-</div>
+
 }
 else
 {
