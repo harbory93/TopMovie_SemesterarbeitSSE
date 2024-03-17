@@ -129,6 +129,9 @@
   <data name="Freitag" xml:space="preserve">
     <value>Friday</value>
   </data>
+  <data name="ImagePath" xml:space="preserve">
+    <value>Cover</value>
+  </data>
   <data name="Mittwoch" xml:space="preserve">
     <value>Wednesday</value>
   </data>
